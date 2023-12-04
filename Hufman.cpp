@@ -257,9 +257,6 @@ HuffTree* buildHuff (priority_queue<HuffTree*, vector<HuffTree*>, compare> &fore
             tmp2 = forest.top(); forest.pop();
             tmp3 = new HuffTree(tmp1, tmp2); countDelete++;
             balanceProcess(tmp3->getRoot());
-            cout << "tmp3: " << tmp3->getRoot()->getWeight() << "-" << tmp3->getRoot()->getHeight() << "  print: ";
-            tmp3->printHuffTree(tmp3->getRoot());
-            cout << endl;
             forest.push(tmp3);
             delete tmp1; tmp1 = nullptr; countDelete--;
             delete tmp2; tmp2 = nullptr; countDelete--;
@@ -339,11 +336,11 @@ string encodeString (vector<pair<char, string>> &encode, string &input)
 int main()
 {
     // char: ki tu // int: so thu tu xuat hien, cang lon thi vao cang tre, cang nho thi vao cang som
-    vector<pair<char, int>> letters = {{'C', 0}, {'D', 1}, {'E', 2}, {'K', 3}, {'L', 4}, {'M', 5}, {'U', 6}, {'Z', 7}};
-    vector<int> frequencies = {32, 42, 120, 7, 42, 24, 37, 2};
+    vector<pair<char, int>> letters = {{'E', 0}, {'f', 1}, {'e', 2}};
+    vector<int> frequencies = {1, 4, 5};
 
     priority_queue<HuffTree*, vector<HuffTree*>, compare> forest;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 3; i++) {
         HuffTree *newNode = new HuffTree(letters[i], frequencies[i], 0); countDelete++;
         forest.push(newNode);
     }
@@ -359,25 +356,4 @@ int main()
     huff_tree->printHuffTree(huff_tree->getRoot());
     cout << endl << endl;
 
-    cout << "Priority Queue after buidHuff: <front .... rear> -------------------------------------------------------------" << endl;
-    cout << "\t";
-    printPriorityQueue(forest);
-
-    vector<pair<char, string>> encode = encodeCharacter(huff_tree);
-    cout << "Encode character: --------------------------------------------------------------------------------------------" << endl;
-    for (pair<char, string> &i : encode) {
-        cout << "\t" << i.first << "-" << i.second << endl;
-    } cout << endl;
-
-    string encode_string = "MUCK";
-    cout << "Encode string: " << encode_string << " has the form: ----------------------------------------------------------------------------" << endl;
-    cout << "\t" << encodeString(encode, encode_string);
-    cout << endl << endl;
-
-    // huff_tree->clear(huff_tree->getRoot());
-    // delete huff_tree; countDelete--;
-
-    if (countDelete == 0) {
-        cout << "Clear Success!!" << endl;
-    }
 }
